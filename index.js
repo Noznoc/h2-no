@@ -10,8 +10,9 @@ var map = new mapboxgl.Map({
   center: [-99.93, 54.32],
   zoom: 4,
   maxZoom: 10,
-  minZoom: 3,
-  maxBounds: [-168.39312,40.713956,-50.971241,83.359511]
+  //minZoom: 3,
+  hash: true/*,
+  maxBounds: [-168.39312,40.713956,-50.971241,83.359511]*/
 });
 
 function init() { // function that initializes TableTop. Tabletop will pull the data from the Google Sheet that stores all the da
@@ -27,9 +28,10 @@ var years = [];
 
 function showInfo(data, tabletop) { // function to show data from Google Sheet
 	data.forEach(function(data) {
-		if (data.lng) {
+		if (data.coordinates && data.coordinates !== "#ERROR!") {
+			console.log()
 			// store all lat, lng as geojson features
-			var coordinates = [parseFloat(data.lng), parseFloat(data.lat)];
+			var coordinates = [parseFloat(data.coordinates.split(",")[0]), parseFloat(data.coordinates.split(",")[1])];
 			var year = parseInt(data.date_set.substr(0, 4));
 			features.push(JSON.parse('{"type":"Feature","properties":{"description":"' + data.community + '","date_revoked":"' + data.date_revoked + '","advisory_type":"' + data.advisory_type + '","year":' + year + ',"date_set":"' + data.date_set + '","system_name":"' + toString(data.system_name) + '"},"geometry":{"type":"Point","coordinates":[' +  coordinates + ']}}'));
 			// store all years

@@ -10,9 +10,9 @@ var map = new mapboxgl.Map({
   center: [-99.93, 54.32],
   zoom: 4,
   maxZoom: 10,
-  //minZoom: 3,
-  hash: true/*,
-  maxBounds: [-168.39312,40.713956,-50.971241,83.359511]*/
+  minZoom: 3,
+  hash: true,
+  maxBounds: [-168.39312,40.713956,-50.971241,83.359511]
 });
 
 function init() { // function that initializes TableTop. Tabletop will pull the data from the Google Sheet that stores all the da
@@ -28,7 +28,7 @@ var years = [];
 
 function showInfo(data, tabletop) { // function to show data from Google Sheet
 	data.forEach(function(data) {
-		if (data.coordinates && data.coordinates !== "#ERROR!") {
+		if (data.coordinates !== "#ERROR!") {
 			console.log()
 			// store all lat, lng as geojson features
 			var coordinates = [parseFloat(data.coordinates.split(",")[0]), parseFloat(data.coordinates.split(",")[1])];
